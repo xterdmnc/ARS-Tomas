@@ -1,0 +1,76 @@
+.sales-reports-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sales-reports-container h2 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sales-reports-container h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.sales-summary ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sales-summary ul li {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.sales-updates p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.sales-analytics {
+    margin-top: 20px;
+}
+
+.sales-analytics p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.sales-analytics canvas {
+    max-width: 100%;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .sales-reports-container {
+        padding: 15px;
+    }
+
+    .sales-reports-container h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .sales-reports-container h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .sales-summary ul li {
+        font-size: 14px;
+        margin-bottom: 3px;
+    }
+
+    .sales-updates p,
+    .sales-analytics p {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+}

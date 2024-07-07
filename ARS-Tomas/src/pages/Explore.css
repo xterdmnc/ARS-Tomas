@@ -1,0 +1,77 @@
+.explore-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+}
+
+.explore-header {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.explore-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.explore-header p {
+    font-size: 1.2rem;
+}
+
+.destinations, .travel-tips, .promotions {
+    margin: 40px 0;
+}
+
+.destinations h2, .travel-tips h2, .promotions h2 {
+    font-size: 2rem;
+    color: #343a40;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.destination-grid, .promotion-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.destination-card, .promotion-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    width: calc(33.333% - 20px);
+    margin: 10px 0;
+}
+
+.destination-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.destination-card h3, .promotion-card h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin: 10px 0;
+}
+
+.destination-card p, .promotion-card p {
+    font-size: 1rem;
+    color: #6c757d;
+    padding: 0 10px 20px;
+}
+
+.travel-tips ul {
+    list-style-type: disc;
+    margin: 20px 40px;
+}
+
+.travel-tips li {
+    font-size: 1rem;
+    color: #6c757d;
+    margin: 10px 0;
+}

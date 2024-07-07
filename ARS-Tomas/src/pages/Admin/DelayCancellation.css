@@ -1,0 +1,82 @@
+.delay-cancellation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+.search-container label {
+    font-weight: bold;
+}
+
+.search-container input[type="text"] {
+    padding: 8px;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.flight-list {
+    display: grid;
+    gap: 20px;
+}
+
+.flight-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+}
+
+.flight-info {
+    flex: 1;
+}
+
+.flight-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-flight-form {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+}
+
+.edit-flight-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.edit-flight-form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.delete-confirmation {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+}
+
+.special-note {
+    font-style: italic;
+    color: #888;
+}

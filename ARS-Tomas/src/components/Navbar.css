@@ -1,0 +1,103 @@
+/* src/components/Navbar.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap'); /* Importing fonts */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(90deg, #003366, #004d99, #0080ff); /* Improved gradient background */
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif; /* Change font for a modern look */
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    height: 40px; /* Adjust this value to fit your logo size */
+    margin-right: 1rem;
+}
+
+.navbar-title {
+    font-family: 'Roboto', sans-serif; /* Use Lora for a more elegant title font */
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 0.05em; /* Slightly increase letter spacing */
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu li {
+    margin: 0 1rem;
+}
+
+.navbar-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar-menu a:hover {
+    color: #ffcc00; /* Hover color */
+}
+
+.navbar-login, .user-links a {
+    margin-left: 1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar-login:hover, .user-links a:hover {
+    color: #ffcc00; /* Hover color */
+}
+
+.user-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logout {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.navbar-logout:hover {
+    background-color: #ff9900;
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Add media query for responsive design */
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none; /* Hide menu on smaller screens */
+    }
+
+    .navbar-links {
+        flex-direction: column;
+    }
+}
