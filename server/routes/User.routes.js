@@ -1,12 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
 const UserController = require('../controller/User.controller');
 
-router.post('/loginuser', UserController.LoginUser);
+// Create User - POST /api/users
 router.post('/createuser', UserController.CreateUser);
-router.get('/users', UserController.ListUsers); 
+
+// Login User - POST /api/users/loginuser
+router.post('/loginuser', UserController.LoginUser);
+
+// List Users - GET /api/users
+router.get('/users', UserController.ListUsers);
+
+// Edit User - PUT /api/users/:id
 router.put('/users/:id', UserController.EditUser);
-router.delete('/users/:id', UserController.DeleteUser); 
+
+// Delete User - DELETE /api/users/:id
+router.delete('/users/:id', UserController.DeleteUser);
 
 module.exports = router;

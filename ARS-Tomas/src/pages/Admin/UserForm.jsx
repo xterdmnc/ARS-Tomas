@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UserForm = ({ user, onSave }) => {
+const UserForm = ({ user, onSave, onCancel }) => {
     const [values, setValues] = useState({
         username: user?.username || '',
         password: '',
@@ -14,7 +14,9 @@ const UserForm = ({ user, onSave }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(values);
+        if (window.confirm('Are you sure you want to save this user?')) {
+            onSave(values);
+        }
     };
 
     return (
@@ -27,23 +29,30 @@ const UserForm = ({ user, onSave }) => {
                     value={values.username}
                     onChange={handleChange}
                     placeholder="Username"
+                    required
                 />
-                <input
-                    type="password"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    placeholder="Password"
-                />
+                {!user && (
+                    <input
+                        type="password"
+                        name="password"
+                        value={values.password}
+                        onChange={handleChange}
+                        placeholder="Password"
+                        required
+                    />
+                )}
                 <select name="role" value={values.role} onChange={handleChange}>
                     <option value="customer">Customer</option>
                     <option value="staff">Staff</option>
                     <option value="admin">Admin</option>
                 </select>
-                <button type="submit">Save</button>
+                <div className="form-buttons">
+                    <button type="submit">Save</button>
+                    {onCancel && <button type="button" onClick={onCancel}>Cancel</button>}
+                </div>
             </form>
         </div>
     );
 };
 
-export default UserForm; // Ensure UserForm is exported as default
+export default UserForm;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import './AdminDashboard.css'; // Import the CSS file
 
 // Import new components for each feature
@@ -13,6 +13,7 @@ import SalesReports from './SalesReports';
 import CustomerInsights from './CustomerInsights';
 
 const AdminDashboard = () => {
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -71,6 +72,7 @@ const AdminDashboard = () => {
             fetchUsers();
             setEditingUser(null);
             setShowForm(false);
+            navigate('/admin'); // Navigate back to user management after save
         } catch (error) {
             console.error('Error saving user', error);
         }
@@ -104,7 +106,7 @@ const AdminDashboard = () => {
                                         <button className="add-user-button" onClick={handleAddUser}>Add User</button>
                                     </div>
                                     <UserList users={users} onDelete={handleDelete} onEdit={handleEdit} />
-                                    {showForm && <UserForm user={editingUser} onSave={handleSave} />}
+                                    {showForm && <UserForm user={editingUser} onSave={handleSave} onCancel={() => setShowForm(false)} />}
                                 </>
                             )}
                         </>
