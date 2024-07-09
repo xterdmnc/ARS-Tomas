@@ -14,14 +14,14 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${VITE_HOST}api/loginuser`, {
+            const res = await axios.post(`${VITE_HOST}/api/loginuser`, {
                 username: values.username,
                 password: values.password
             });
-
+    
             if (res.data.success) {
                 localStorage.setItem('userRole', res.data.role);
-
+    
                 if (res.data.role === 'admin') {
                     navigate('/admin');
                 } else if (res.data.role === 'staff') {
@@ -37,6 +37,7 @@ const Login = () => {
             alert('Failed to login. Please try again later.');
         }
     };
+    
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;

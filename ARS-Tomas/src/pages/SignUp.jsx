@@ -27,7 +27,7 @@ const SignUp = () => {
         }
     
         try {
-            const res = await axios.post(`${VITE_HOST}api/createuser`, {
+            const res = await axios.post(`${VITE_HOST}/api/createuser`, {
                 lastName,
                 firstName,
                 email,
@@ -36,7 +36,6 @@ const SignUp = () => {
                 confirm: confirmPassword,
                 role
             });
-    
             if (res.data.success) {
                 navigate('/login');
             } else {
@@ -54,6 +53,7 @@ const SignUp = () => {
             ...prev,
             [name]: value
         }));
+        console.log(values)
     };
 
     return (
