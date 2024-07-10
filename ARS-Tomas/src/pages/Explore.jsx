@@ -12,17 +12,17 @@ const Explore = () => {
                 <h2>Popular Destinations</h2>
                 <div className="destination-grid">
                     <div className="destination-card">
-                        <img src="/images/destination1.jpg" alt="Destination 1" />
+                        <img src="/paris.jpg" alt="Destination 1" />
                         <h3>Paris, France</h3>
                         <p>The city of lights and love. Discover the iconic Eiffel Tower and indulge in French cuisine.</p>
                     </div>
                     <div className="destination-card">
-                        <img src="/images/destination2.jpg" alt="Destination 2" />
+                        <img src="/tokyo.jpg" alt="Destination 2" />
                         <h3>Tokyo, Japan</h3>
                         <p>Experience the perfect blend of tradition and modernity in this vibrant city.</p>
                     </div>
                     <div className="destination-card">
-                        <img src="/images/destination3.jpg" alt="Destination 3" />
+                        <img src="/newyork.jpg" alt="Destination 3" />
                         <h3>New York, USA</h3>
                         <p>The city that never sleeps. Explore Times Square, Central Park, and world-class museums.</p>
                     </div>

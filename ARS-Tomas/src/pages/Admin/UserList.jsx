@@ -7,7 +7,9 @@ const UserList = ({ users, onDelete, onEdit }) => {
                 <div key={user._id} className="user-card">
                     <div className="user-details">
                         <h3>{user.username}</h3>
-                        <p>Role: {user.role}</p> {/* Display the role */}
+                        <p>{user.firstName} {user.lastName}</p>
+                        <p>Email: {user.email}</p>
+                        <p>Role: {user.role}</p>
                     </div>
                     <div className="user-actions">
                         <button onClick={() => onEdit(user)}>Edit</button>

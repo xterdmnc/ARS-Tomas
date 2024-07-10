@@ -7,7 +7,7 @@ const UserController = {
         try {
             const { lastName, firstName, email, username, password, confirm, role } = req.body;
 
-            if (password !== confirm) { 
+            if (password !== confirm) {
                 return res.status(400).json({ success: false, message: 'Passwords do not match' });
             }
 
@@ -35,12 +35,10 @@ const UserController = {
         try {
             const { username, password } = req.body;
 
-            // console.log({ username, password })
             const user = await UserModel.findOne({ username: username });
-          
+
             if (user) {
                 const isMatch = await bcrypt.compare(password, user.password);
-                console.log(isMatch)
                 if (isMatch) {
                     const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
                     res.json({ success: true, message: 'User logged in successfully', token, role: user.role });
@@ -56,45 +54,52 @@ const UserController = {
         }
     },
 
-    // EditUser: async (req, res) => {
-    //     try {
-    //         const { id } = req.params;
-    //         const updates = req.body;
+    EditUser: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { lastName, firstName, email, username, password, role } = req.body;
 
-    //         const user = await UserModel.findByIdAndUpdate(id, updates, { new: true });
+            const updates = { lastName, firstName, email, username, role };
 
-    //         if (user) {
-    //             res.json({ success: true, message: 'User updated successfully!', user });
-    //         } else {
-    //             res.json({ success: false, message: 'User not found' });
-    //         }
-    //     } catch (error) {
-    //         console.error(`EditUser in user controller error: ${error}`);
-    //         res.json({ success: false, error: 'Server error' });
-    //     }
-    // },
+            if (password) {
+                const hashedPassword = await bcrypt.hash(password, 10);
+                updates.password = hashedPassword;
+            }
 
-    // DeleteUser: async (req, res) => {
-    //     try {
-    //         const { id } = req.params;
+            const user = await UserModel.findByIdAndUpdate(id, updates, { new: true });
 
-    //         await UserModel.findByIdAndDelete(id);
-    //         res.json({ success: true, message: 'User deleted successfully!' });
-    //     } catch (error) {
-    //         console.error(`DeleteUser in user controller error: ${error}`);
-    //         res.json({ success: false, error: 'Server error' });
-    //     }
-    // },
+            if (user) {
+                res.json({ success: true, message: 'User updated successfully!', user });
+            } else {
+                res.json({ success: false, message: 'User not found' });
+            }
+        } catch (error) {
+            console.error(`EditUser in user controller error: ${error}`);
+            res.json({ success: false, error: 'Server error' });
+        }
+    },
 
-    // ListUsers: async (req, res) => {
-    //     try {
-    //         const users = await UserModel.find();
-    //         res.json({ success: true, users });
-    //     } catch (error) {
-    //         console.error(`ListUsers in user controller error: ${error}`);
-    //         res.json({ success: false, error: 'Server error' });
-    //     }
-    // }
+    DeleteUser: async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            await UserModel.findByIdAndDelete(id);
+            res.json({ success: true, message: 'User deleted successfully!' });
+        } catch (error) {
+            console.error(`DeleteUser in user controller error: ${error}`);
+            res.json({ success: false, error: 'Server error' });
+        }
+    },
+
+    ListUsers: async (req, res) => {
+        try {
+            const users = await UserModel.find();
+            res.json({ success: true, users });
+        } catch (error) {
+            console.error(`ListUsers in user controller error: ${error}`);
+            res.json({ success: false, error: 'Server error' });
+        }
+    }
 };
 
 module.exports = UserController;

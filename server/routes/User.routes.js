@@ -9,12 +9,12 @@ router.post('/createuser', UserController.CreateUser);
 router.post('/loginuser', UserController.LoginUser);
 
 // List Users - GET /api/users
-// router.get('/users', UserController.ListUsers);
+router.get('/users', UserController.ListUsers);
 
 // Edit User - PUT /api/users/:id
-// router.put('/users/:id', UserController.EditUser);
+router.put('/users/:id', UserController.EditUser);
 
 // Delete User - DELETE /api/users/:id
-// router.delete('/users/:id', UserController.DeleteUser);
+router.delete('/users/:id', UserController.DeleteUser);
 
 module.exports = router;

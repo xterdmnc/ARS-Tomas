@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 const UserForm = ({ user, onSave, onCancel }) => {
     const [values, setValues] = useState({
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
+        email: user?.email || '',
         username: user?.username || '',
         password: '',
         role: user?.role || 'customer',
@@ -23,6 +26,30 @@ const UserForm = ({ user, onSave, onCancel }) => {
         <div className="admin-form">
             <h2>{user ? 'Edit User' : 'Add User'}</h2>
             <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    name="firstName"
+                    value={values.firstName}
+                    onChange={handleChange}
+                    placeholder="First Name"
+                    required
+                />
+                <input
+                    type="text"
+                    name="lastName"
+                    value={values.lastName}
+                    onChange={handleChange}
+                    placeholder="Last Name"
+                    required
+                />
+                <input
+                    type="email"
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    required
+                />
                 <input
                     type="text"
                     name="username"

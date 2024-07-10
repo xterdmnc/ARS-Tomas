@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import './AdminDashboard.css'; // Import the CSS file
+import './AdminDashboard.css';
 
 // Import new components for each feature
 import UserList from './UserList';
@@ -19,6 +19,7 @@ const AdminDashboard = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showForm, setShowForm] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         fetchUsers();
@@ -28,8 +29,8 @@ const AdminDashboard = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.get('http://localhost:3001/api/users'); // Ensure the correct URL
-            console.log('Full API response:', res.data); // Log the full response
+            const res = await axios.get('http://localhost:3001/api/users');
+            console.log('Full API response:', res.data);
             if (res.data.success && Array.isArray(res.data.users)) {
                 setUsers(res.data.users);
             } else {
@@ -45,7 +46,7 @@ const AdminDashboard = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/api/users/${id}`); // Ensure the correct URL
+            await axios.delete(`http://localhost:3001/api/users/${id}`);
             fetchUsers();
         } catch (error) {
             console.error('Error deleting user', error);
@@ -65,24 +66,35 @@ const AdminDashboard = () => {
     const handleSave = async (user) => {
         try {
             if (user._id) {
-                await axios.put(`http://localhost:3001/api/users/${user._id}`, user); // Ensure the correct URL
+                await axios.put(`http://localhost:3001/api/users/${user._id}`, user);
             } else {
-                await axios.post('http://localhost:3001/api/users', user); // Ensure the correct URL
+                await axios.post('http://localhost:3001/api/users', user);
             }
             fetchUsers();
             setEditingUser(null);
             setShowForm(false);
-            navigate('/admin'); // Navigate back to user management after save
+            navigate('/admin');
         } catch (error) {
             console.error('Error saving user', error);
         }
     };
 
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredUsers = users.filter(user =>
+        user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="admin-dashboard">
             <div className="sidebar">
                 <ul>
-                    <li><Link to="/admin/">User Management</Link></li> {/* Update to include /admin/ */}
+                    <li><Link to="/admin/">User Management</Link></li>
                     <li><Link to="/admin/crew-assignment">Crew Management</Link></li>
                     <li><Link to="/admin/flight-updates">Flight Updates</Link></li>
                     <li><Link to="/admin/delay-cancellation">Delay & Cancellation</Link></li>
@@ -94,18 +106,39 @@ const AdminDashboard = () => {
                 <Routes>
                     <Route path="/" element={
                         <>
-                            <h1>User Management</h1>
+                            <div className="user-list-header">
+                                <h1>User Management</h1>
+                                <div className="search-user">
+                                    <input
+                                        type="text"
+                                        placeholder="Search users"
+                                        value={searchQuery}
+                                        onChange={handleSearch}
+                                    />
+                                    <button className="add-user-button" onClick={handleAddUser}>Add User</button>
+                                </div>
+                            </div>
                             {loading ? (
                                 <p>Loading...</p>
                             ) : error ? (
                                 <p>{error}</p>
                             ) : (
                                 <>
-                                    <div className="user-list-header">
-                                        <h2>User List</h2>
-                                        <button className="add-user-button" onClick={handleAddUser}>Add User</button>
+                                    <div className="user-list-container">
+                                        {filteredUsers.map(user => (
+                                            <div key={user._id} className="user-card">
+                                                <div className="user-details">
+                                                    <p><strong>Username:</strong> {user.username}</p>
+                                                    <p><strong>Name:</strong> {user.firstName} {user.lastName}</p>
+                                                    <p><strong>Email:</strong> {user.email}</p>
+                                                </div>
+                                                <div className="user-actions">
+                                                    <button onClick={() => handleEdit(user)}>Edit</button>
+                                                    <button onClick={() => handleDelete(user._id)}>Delete</button>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <UserList users={users} onDelete={handleDelete} onEdit={handleEdit} />
                                     {showForm && <UserForm user={editingUser} onSave={handleSave} onCancel={() => setShowForm(false)} />}
                                 </>
                             )}
