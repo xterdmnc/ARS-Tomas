@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express();
 const ConnectToDatabase = require('../config/db'); // Replace with your database connection setup
 const UserRoute = require('../routes/User.routes'); // Replace with your routes setup
+const BookingsRoute = require('../routes/Booking.routes')
 
 // CORS setup
 app.use(cors({
@@ -19,13 +20,14 @@ app.use(express.json());
 ConnectToDatabase(); // Ensure this function initializes your database connection
 
 // Example default route
-app.get('/', () => {
+app.get('/', (req, res) => {
     res.json({
         message: 'Welcome'
     });
 });
 
-// Use User routes
 app.use('/api', UserRoute);
+
+app.use('/api', BookingsRoute);
 
 module.exports = app;

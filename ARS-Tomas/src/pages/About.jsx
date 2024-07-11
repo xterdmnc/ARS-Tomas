@@ -32,7 +32,7 @@ const About = () => {
                     <li>Frequent flyer programs</li>
                     <li>Customer support 24/7</li>
                 </ul>
-                <img src="/services.jpg" alt="SkyEase Services" className="about-image" />
+                <img src="/service.jpg" alt="SkyEase Services" className="about-image" />
             </section>
 
             <section className="content-section">
