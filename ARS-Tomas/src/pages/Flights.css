@@ -1,65 +1,140 @@
 .flights-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    font-family: Arial, sans-serif;
     padding: 20px;
-    background-color: #f0f0f0; /* Eye-friendly background color */
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, #1a98e0, #51aadd);
+    color: #333;
 }
 
 .flights-header {
     text-align: center;
-    margin-bottom: 20px;
+    padding: 20px;
+    background: linear-gradient(90deg, #003366, #004d99, #0080ff);
+    color: white;
+    border-radius: 10px;
+}
+
+.flights-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.flights-header p {
+    margin: 10px 0 0;
+    font-size: 1.2rem;
+}
+
+.flight-promotion {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.promotion-banner {
+    background: #ff4500;
+    color: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.promotion-banner h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.promotion-banner p {
+    margin: 10px 0 0;
+    font-size: 1rem;
+}
+
+.flight-destinations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.destination-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    color: #1e90ff;
+}
+
+.destination-card p {
+    margin: 5px 0;
 }
 
 .flight-booking {
-    background-color: #fff; /* White background for booking section */
+    margin: 40px 0;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: #f9f9f9;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flight-booking h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
 }
 
 .booking-form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-label {
+.form-group label {
+    margin-bottom: 5px;
     font-weight: bold;
 }
 
-input[type='number'],
-select {
-    width: 100%;
+.form-group select,
+.form-group input[type="number"],
+.form-group input[type="radio"] {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%;
 }
 
-input[type='radio'] {
-    margin-right: 5px;
+.form-group input[type="radio"] {
+    margin-right: 10px;
 }
 
 .book-flight-button {
-    background-color: #007bff; /* Blue primary button color */
-    color: #fff;
+    padding: 15px 30px;
+    background: #1e90ff;
+    color: white;
     border: none;
-    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    transition-duration: 0.4s;
+    transition: background 0.3s ease;
+    width: 100%;
+    max-width: 250px; /* Optional: Limit maximum width for larger screens */
+    justify-self: center; /* Center button in its grid cell */
 }
 
 .book-flight-button:hover {
-    background-color: #0056b3; /* Darker shade of blue on hover */
+    background: #0059b3;
 }

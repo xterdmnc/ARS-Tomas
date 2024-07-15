@@ -79,16 +79,24 @@ const flightsData = [
         destination: 'Moscow, Russia',
         airport: 'Sheremetyevo International Airport (SVO)',
         aircraft: 'Airbus A350',
-        specialNote: 'Special VIP flights available.',
+        specialNote: 'Special VIP flights unavailable.',
     },
 ];
 
 const Flights = () => {
-    const [fromDestination, setFromDestination] = useState('Clark International Airport, Philippines');
+    const [fromDestination, setFromDestination] = useState('');
     const [toDestination, setToDestination] = useState('');
     const [passengers, setPassengers] = useState(1);
     const [tripType, setTripType] = useState('one-way');
     const [flightClass, setFlightClass] = useState('economy');
+
+    const fromDestinationOptions = [
+        'Ninoy Aquino International Airport, Philippines',
+        'Clark International Airport, Philippines',
+        'Laoag International Airport, Philippines',
+        'Mactan-Cebu International Airport, Philippines',
+        'Kalibo International Airport, Philippines',
+    ];
 
     const handleBooking = () => {
         // Implement your booking logic here
@@ -98,10 +106,27 @@ const Flights = () => {
     return (
         <div className="flights-container">
             <header className="flights-header">
-                <h1>Book Your Flight</h1>
-                <p>Welcome to SkyEase! Choose your flight details below:</p>
+                <h1>Explore the World with Comfort and Style</h1>
+                <p>Experience luxury, comfort, and convenience with SkyEase. Book your next adventure today!</p>
             </header>
+            <section className="flight-promotion">
+                <div className="promotion-banner">
+                    <h2>Special Offers!</h2>
+                    <p>Enjoy exclusive deals and VIP treatment on all our flights.</p>
+                </div>
+                <div className="flight-destinations">
+                    {flightsData.map((flight, index) => (
+                        <div key={index} className="destination-card">
+                            <h3>{flight.destination}</h3>
+                            <p>{flight.airport}</p>
+                            <p>{flight.aircraft}</p>
+                            <p>{flight.specialNote}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
             <section className="flight-booking">
+                <h2>Book Your Flight</h2>
                 <div className="booking-form">
                     <div className="form-group">
                         <label htmlFor="fromDestination">From:</label>
@@ -110,11 +135,12 @@ const Flights = () => {
                             value={fromDestination}
                             onChange={(e) => setFromDestination(e.target.value)}
                         >
-                            <option value="Ninoy Aquino International Airport, Philippines">Ninoy Aquino International Airport, Philippines</option>
-                            <option value="Clark International Airport, Philippines">Clark International Airport, Philippines</option>
-                            <option value="Laoag International Airport, Philippines">Laoag International Airport, Philippines</option>
-                            <option value="Mactan-Cebu International Airport, Philippines">Mactan-Cebu International Airport, Philippines</option>
-                            <option value="Kalibo International Airport, Philippines">Kalibo International Airport, Philippines</option>
+                            <option value="">Select Departure Airport</option>
+                            {fromDestinationOptions.map((option, index) => (
+                                <option key={index} value={option}>
+                                    {option}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className="form-group">

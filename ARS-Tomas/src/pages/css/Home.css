@@ -1,67 +1,52 @@
-/* Home.css */
-
 .home {
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
 }
 
 .hero {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/cover.webp') center/cover no-repeat;
-    height: 500px;
+    background-image: url('../images/hero-background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 400px; /* Adjusted height */
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
     text-align: center;
-    position: relative;
+    color: #fff;
+    margin-top: 170px; /* Added margin to push it below the navbar */
 }
 
 .hero-content {
-    max-width: 600px;
-    margin: 0 auto;
-    z-index: 1;
+    max-width: 800px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
 }
 
-.hero h1 {
-    font-size: 3.5rem;
+.hero-content h1 {
+    font-size: 3rem;
     margin-bottom: 20px;
 }
 
-.hero p {
+.hero-content p {
     font-size: 1.5rem;
-    margin-bottom: 20px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
+    margin-bottom: 30px;
 }
 
 .highlights {
-    background-color: #f8f9fa;
+    background: #f0f4f7;
     padding: 40px 0;
+}
+
+.highlights .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 130px; /* Added margin to push it below the navbar */ 
 }
 
 .highlights h2 {
     font-size: 2.5rem;
-    text-align: center;
     margin-bottom: 40px;
 }
 
@@ -71,13 +56,12 @@
 }
 
 .highlight-card {
-    background-color: #fff;
-    padding: 30px;
-    text-align: center;
+    background: #fff;
     border-radius: 10px;
+    padding: 20px;
+    width: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    max-width: 300px;
 }
 
 .highlight-card:hover {
@@ -85,28 +69,35 @@
 }
 
 .highlight-card h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 10px;
-    color: #333;
+    color: #1e90ff;
 }
 
 .highlight-card p {
     font-size: 1.2rem;
-    color: #666;
+    line-height: 1.6;
 }
 
 .features {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.features .container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-around;
-    margin-top: 40px;
+    flex-wrap: wrap;
 }
 
 .feature {
-    text-align: center;
-    max-width: 300px;
-    padding: 30px;
-    background-color: #fff;
+    width: 300px;
+    padding: 20px;
+    background: #fff;
     border-radius: 10px;
+    margin-bottom: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
@@ -117,11 +108,80 @@
 
 .feature h2 {
     font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #333;
+    margin-bottom: 20px;
+    color: #1e90ff;
 }
 
 .feature p {
     font-size: 1.2rem;
-    color: #666;
+    line-height: 1.6;
+}
+
+.picture-text {
+    background-color: #f9f9f9;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.picture-text-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.picture-text-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.picture-text-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.testimonial {
+    background-color: #fff;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.testimonial .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.testimonial-cards {
+    display: flex;
+    justify-content: space-around;
+}
+
+.testimonial-card {
+    background: #f0f4f7;
+    border-radius: 10px;
+    padding: 30px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: left;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-card p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.testimonial-card span {
+    font-weight: bold;
 }

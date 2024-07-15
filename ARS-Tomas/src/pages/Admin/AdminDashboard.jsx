@@ -20,6 +20,7 @@ const AdminDashboard = () => {
     const [error, setError] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const { VITE_HOST } = import.meta.env;
 
     useEffect(() => {
         fetchUsers();
@@ -29,7 +30,7 @@ const AdminDashboard = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.get('http://localhost:3001/api/users');
+            const res = await axios.get(`${VITE_HOST}/api/users`);
             console.log('Full API response:', res.data);
             if (res.data.success && Array.isArray(res.data.users)) {
                 setUsers(res.data.users);
@@ -46,7 +47,7 @@ const AdminDashboard = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/api/users/${id}`);
+            await axios.delete(`${VITE_HOST}/api/users/${id}`);
             fetchUsers();
         } catch (error) {
             console.error('Error deleting user', error);
@@ -66,9 +67,9 @@ const AdminDashboard = () => {
     const handleSave = async (user) => {
         try {
             if (user._id) {
-                await axios.put(`http://localhost:3001/api/users/${user._id}`, user);
+                await axios.put(`${VITE_HOST}/api/users/${user._id}`, user);
             } else {
-                await axios.post('http://localhost:3001/api/users', user);
+                await axios.post(`${VITE_HOST}/api/users`, user);
             }
             fetchUsers();
             setEditingUser(null);

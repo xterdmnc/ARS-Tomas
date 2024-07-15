@@ -9,7 +9,7 @@ const Home = () => {
                 <div className="hero-content">
                     <h1>Explore the World with SkyEase</h1>
                     <p>Book your flights with ease and comfort.</p>
-                    <Link to="/flights" className="btn-primary">Search Flights</Link>
+                    <img src="/SkyEase.png" alt="Destination 1" />
                 </div>
             </div>
             <section className="highlights">
@@ -44,6 +44,27 @@ const Home = () => {
                     <div className="feature">
                         <h2>Exclusive Offers</h2>
                         <p>Get access to special deals and discounts.</p>
+                    </div>
+                </div>
+            </section>
+            <section className="picture-text">
+                <div className="picture-text-content">
+                    <h2>Experience Luxury Travel with SkyEase</h2>
+                    <p>Explore new horizons with our top-class service and luxurious flights. Whether you're traveling for business or leisure, SkyEase ensures a comfortable and memorable journey.</p>
+                </div>
+            </section>
+            <section className="testimonial">
+                <div className="container">
+                    <h2>What Our Customers Say</h2>
+                    <div className="testimonial-cards">
+                        <div className="testimonial-card">
+                            <p>"SkyEase provided me with an exceptional travel experience. From booking to boarding, everything was seamless and comfortable."</p>
+                            <span>- John Doe, Business Traveler</span>
+                        </div>
+                        <div className="testimonial-card">
+                            <p>"I highly recommend SkyEase for their professional service and attention to detail. My family and I had a wonderful vacation thanks to them."</p>
+                            <span>- Jane Smith, Leisure Traveler</span>
+                        </div>
                     </div>
                 </div>
             </section>

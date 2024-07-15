@@ -2,9 +2,11 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const ConnectToDatabase = require('../config/db'); // Replace with your database connection setup
-const UserRoute = require('../routes/User.routes'); // Replace with your routes setup
-const BookingsRoute = require('../routes/Booking.routes')
+const ConnectToDatabase = require('../config/db');
+const UserRoute = require('../routes/User.routes');
+const BookingsRoute = require('../routes/Booking.routes');
+const FeedbackRoute = require('../routes/Feedback.routes');
+const PaymentRoute = require('../routes/Payment.routes');
 
 // CORS setup
 app.use(cors({
@@ -29,5 +31,9 @@ app.get('/', (req, res) => {
 app.use('/api', UserRoute);
 
 app.use('/api', BookingsRoute);
+
+app.use('/api', FeedbackRoute); // Use Feedback route
+
+app.use('/api', PaymentRoute);
 
 module.exports = app;

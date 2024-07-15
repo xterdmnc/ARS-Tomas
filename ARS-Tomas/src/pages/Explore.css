@@ -7,7 +7,8 @@
 .explore-header {
     text-align: center;
     padding: 50px 20px;
-    background-color: #007bff;
+    background: linear-gradient(90deg, #003366, #004d99, #0080ff);
+    border-radius: 12px;
     color: #fff;
 }
 

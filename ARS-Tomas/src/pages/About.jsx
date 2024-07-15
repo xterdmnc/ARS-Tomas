@@ -7,7 +7,8 @@ const About = () => {
             <section className="hero">
                 <div className="hero-text">
                     <h1>About SkyEase</h1>
-                    <p>Where Convenience Meets the Sky</p>
+                    <p>SkyEase is dedicated to creating an unparalleled travel experience where convenience meets the sky. We strive to offer our passengers more than just flights; we provide seamless journeys that blend comfort, efficiency, and exceptional service.</p>
+                    <img src="/history.jpg" alt="SkyEase History" className="about-image" />
                 </div>
             </section>
 
