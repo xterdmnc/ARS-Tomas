@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Dashboard.css'; // Assuming you have a Dashboard.css file for styling
 
 const Dashboard = () => {
@@ -26,10 +27,10 @@ const Dashboard = () => {
   };
 
   const calculatePrice = () => {
-    let basePrice = 100; // Base price for the flight
-    if (formData.tripType === 'roundTrip') basePrice *= 1.8; // Round trip costs 80% more
-    if (formData.travelClass === 'business') basePrice *= 1.5; // Business class costs 50% more
-    if (formData.travelClass === 'first') basePrice *= 2.5; // First class costs 150% more
+    let basePrice = 4500; // Base price for the flight
+    if (formData.tripType === 'roundTrip') basePrice *= 2.3; // Round trip costs 80% more
+    if (formData.travelClass === 'business') basePrice *= 3.8; // Business class costs 50% more
+    if (formData.travelClass === 'first') basePrice *= 5; // First class costs 150% more
     return basePrice * formData.passengers;
   };
 
@@ -87,33 +88,53 @@ const Dashboard = () => {
     }
   };
 
-  const handlePaymentSubmit = async (debitAccount, creditAccount) => {
-    const paymentData = {
-      ...formData,
-      price,
-      debitAccount,
-      creditAccount,
-      bookingDetails
-    };
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
+    if (window.confirm('Are you sure you want to proceed with the payment?')) {
+      try {
+        const token = "$2b$10$02w8E3gOwSc1LQVDVOcLROLVseOGpHIN30SOwjojWIdZBwBDn2yjS"; // Your actual token
   
-    try {
-      const res = await axios.post(`${VITE_HOST}/api/payments`, paymentData);
-      alert(`Payment submitted successfully!\nTotal amount: $${price.toFixed(2)}`);
-      // Optionally reset form states or redirect to a success page
-      setFormData({
-        departureAirport: '',
-        arrivalAirport: '',
-        passengers: 1,
-        tripType: 'oneWay',
-        travelClass: 'economy'
-      });
-      setShowPaymentForm(false);
-      setBookingDetails(null);
-      setPrice(0);
-    } catch (error) {
-      console.error('Error submitting payment:', error);
-      alert('There was an error processing your payment. Please try again.');
+        const res = await axios.post(
+          `http://192.168.10.14:3001/api/unionbank/transfertransaction`,
+          {
+            debitAccount: paymentDetails.debitAccount,
+            creditAccount: paymentDetails.creditAccount,
+            amount: price
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        console.log(res?.data?.message);
+        alert(res?.data?.message)
+        // Optionally reset form states or redirect to a success page
+        setFormData({
+          departureAirport: '',
+          arrivalAirport: '',
+          passengers: 1,
+          tripType: 'oneWay',
+          travelClass: 'economy'
+        });
+        setShowPaymentForm(false);
+        setBookingDetails(null);
+        setPrice(0);
+      } catch (error) {
+        console.error(error);
+        alert(`Error processing payment: ${error.message}`);
+      }
     }
+  };
+
+  const [paymentDetails, setPaymentDetails] = useState({
+    debitAccount: '',
+    creditAccount: ''
+  });
+
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentDetails((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -204,36 +225,49 @@ const Dashboard = () => {
 
         <button type="submit">Book Flight</button>
       </form>
-
-      {bookingDetails && showPaymentForm && (
+      
+      {showPaymentForm && (
         <div className="payment-form">
-          <h3>Payment Details</h3>
-          <p>Total Amount: ${price.toFixed(2)}</p>
-          <div className="form-group">
-            <label htmlFor="debitAccount">Debit Account:</label>
-            <input
-              type="text"
-              id="debitAccount"
-              name="debitAccount"
-              placeholder="Enter Debit Account"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="creditAccount">Credit Account:</label>
-            <input
-              type="text"
-              id="creditAccount"
-              name="creditAccount"
-              placeholder="Enter Credit Account"
-              required
-            />
-          </div>
-          <button onClick={() => handlePaymentSubmit(document.getElementById('debitAccount').value,document.getElementById('creditAccount').value)}>Pay</button>
+          <h2>Payment Form</h2>
+          <form onSubmit={handlePaymentSubmit}>
+            <div className="form-group">
+              <label htmlFor="debitAccount">Debit Account:</label>
+              <input
+                type="text"
+                id="debitAccount"
+                name="debitAccount"
+                value={paymentDetails.debitAccount}
+                onChange={handlePaymentChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="creditAccount">Credit Account:</label>
+              <input
+                type="text"
+                id="creditAccount"
+                name="creditAccount"
+                value={paymentDetails.creditAccount}
+                onChange={handlePaymentChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="amount">Amount:</label>
+              <input
+                type="text"
+                id="amount"
+                name="amount"
+                value={price}
+                readOnly
+              />
+            </div>
+            <button type="submit">Submit Payment</button>
+          </form>
         </div>
       )}
 
-      <h2>Feedback</h2>
+      <h2>Customer Feedback</h2>
       <form onSubmit={handleFeedbackSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>

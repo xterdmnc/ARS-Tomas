@@ -130,7 +130,6 @@ const SignUp = () => {
                     >
                         <option value="customer">Customer</option>
                         <option value="staff">Staff</option>
-                        <option value="admin">Admin</option>
                     </select>
                 </div>
                 <button type="submit" className="btn-primary">Sign Up</button>
