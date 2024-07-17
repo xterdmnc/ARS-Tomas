@@ -1,76 +1,76 @@
 .sales-reports-container {
-    max-width: 800px;
-    margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.sales-reports-container h2 {
-    font-size: 24px;
-    text-align: center;
+h2, h3 {
+    color: #333;
+}
+
+.sales-summary, .sales-updates, .sales-analytics {
     margin-bottom: 20px;
 }
 
-.sales-reports-container h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+ul {
+    list-style: none;
+    padding: 0;
 }
 
-.sales-summary ul {
-    list-style-type: none;
-    padding-left: 0;
+li {
+    margin: 5px 0;
 }
 
-.sales-summary ul li {
-    font-size: 16px;
-    margin-bottom: 5px;
+.sales-updates p, .sales-analytics p {
+    margin: 5px 0;
 }
 
-.sales-updates p {
-    font-size: 16px;
-    margin-bottom: 10px;
+.chart-container {
+    margin-bottom: 20px;
 }
 
-.sales-analytics {
-    margin-top: 20px;
-}
-
-.sales-analytics p {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.sales-analytics canvas {
-    max-width: 100%;
-    margin-top: 10px;
-}
-
+/* Responsive styles */
 @media (max-width: 768px) {
     .sales-reports-container {
         padding: 15px;
     }
 
-    .sales-reports-container h2 {
-        font-size: 20px;
+    .chart-container {
         margin-bottom: 15px;
     }
 
-    .sales-reports-container h3 {
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    ul li, .sales-updates p, .sales-analytics p {
         font-size: 16px;
-        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sales-reports-container {
+        padding: 10px;
     }
 
-    .sales-summary ul li {
-        font-size: 14px;
-        margin-bottom: 3px;
+    .chart-container {
+        margin-bottom: 10px;
     }
 
-    .sales-updates p,
-    .sales-analytics p {
+    h2 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    ul li, .sales-updates p, .sales-analytics p {
         font-size: 14px;
-        margin-bottom: 8px;
     }
 }

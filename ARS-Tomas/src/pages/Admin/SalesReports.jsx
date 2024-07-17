@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import './SalesReports.css'; // Assuming you will style this component
+import React, { useState, useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
+import './SalesReports.css';
 
 const SalesReports = () => {
     const [seatSales, setSeatSales] = useState({
@@ -10,20 +11,19 @@ const SalesReports = () => {
     const [ticketSales, setTicketSales] = useState(0);
     const [refundedSeats, setRefundedSeats] = useState(0);
     const [totalIncome, setTotalIncome] = useState(0);
+    const chartRef = useRef(null);
 
     useEffect(() => {
         // Simulated API call or database fetch for sales data
-        // This would typically fetch from a database or server
-        // For demo purposes, initializing with sample data
         const initialData = {
             seatSales: {
-                economy: 150, // Replace with actual fetched data
-                business: 80, // Replace with actual fetched data
-                firstClass: 30, // Replace with actual fetched data
+                economy: 150,
+                business: 80,
+                firstClass: 30,
             },
-            ticketSales: 400, // Replace with actual fetched data
-            refundedSeats: 20, // Replace with actual fetched data
-            totalIncome: 12000, // Replace with actual fetched data
+            ticketSales: 400,
+            refundedSeats: 20,
+            totalIncome: 1230500,
         };
         setSeatSales(initialData.seatSales);
         setTicketSales(initialData.ticketSales);
@@ -31,9 +31,43 @@ const SalesReports = () => {
         setTotalIncome(initialData.totalIncome);
     }, []);
 
+    useEffect(() => {
+        if (chartRef.current) {
+            chartRef.current.destroy();
+        }
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        chartRef.current = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Economy', 'Business', 'First Class'],
+                datasets: [
+                    {
+                        label: 'Seat Sales',
+                        data: [seatSales.economy, seatSales.business, seatSales.firstClass],
+                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe'],
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        });
+
+        return () => {
+            if (chartRef.current) {
+                chartRef.current.destroy();
+            }
+        };
+    }, [seatSales]);
+
     return (
         <div className="sales-reports-container">
             <h2>Sales Reports</h2>
+            <div className="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
             <div className="sales-summary">
                 <h3>Seat Sales by Class</h3>
                 <ul>
@@ -49,7 +83,7 @@ const SalesReports = () => {
             </div>
             <div className="sales-analytics">
                 <h3>Total Income Report</h3>
-                <p>Total Income This Month: ${totalIncome}</p>
+                <p>Total Income This Month: ₱ {totalIncome}</p>
             </div>
         </div>
     );

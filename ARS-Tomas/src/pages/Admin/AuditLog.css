@@ -1,0 +1,34 @@
+.audit-log-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.audit-log-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.audit-log-table th, .audit-log-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.audit-log-table th {
+    background-color: #f2f2f2;
+}
+
+.audit-log-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.audit-log-table tr:hover {
+    background-color: #ddd;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}

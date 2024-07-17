@@ -23,14 +23,18 @@ const Navbar = () => {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About Us</Link></li>
                     <li><Link to="/flights">Book with Us!</Link></li>
-                    <li><Link to="/Explore">Explore</Link></li>
-                    
+                    <li><Link to="/explore">Explore</Link></li>
                 </ul>
                 {!userRole ? (
                     <Link to="/login" className="navbar-login">Login</Link>
                 ) : (
                     <div className="user-links">
-                        {userRole === 'admin' && <Link to="/admin">Admin Dashboard</Link>}
+                        {userRole === 'admin' && (
+                            <>
+                                <Link to="/admin/audit-logs">Audit Logs</Link> {/* Add Audit Logs Link */}
+                                <Link to="/admin">Admin Dashboard</Link>
+                            </>
+                        )}
                         {userRole === 'staff' && <Link to="/staff">Staff Dashboard</Link>}
                         {userRole === 'customer' && <Link to="/dashboard">Dashboard</Link>}
                         <button onClick={handleLogout} className="navbar-logout">Logout</button>

@@ -78,6 +78,15 @@ const Routes = createBrowserRouter([
             </ProtectedRoute>
         ),
     },
+
+    // {
+    //     path: '/admin/audit-log',
+    //     element: (
+    //         <ProtectedRoute allowedRoles={[roles.ADMIN]}>
+    //             <Layout><AuditLog /></Layout>
+    //         </ProtectedRoute>
+    //     ),
+    // },
 ]);
 
 export default Routes;
