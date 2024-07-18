@@ -5,10 +5,12 @@ import './Dashboard.css'; // Assuming you have a Dashboard.css file for styling
 
 const Dashboard = () => {
   const { VITE_HOST } = import.meta.env;
-  
+
   const [formData, setFormData] = useState({
     departureAirport: '',
     arrivalAirport: '',
+    departureDate: '',
+    departureTime: '',
     passengers: 1,
     tripType: 'oneWay',
     travelClass: 'economy'
@@ -39,7 +41,7 @@ const Dashboard = () => {
     if (window.confirm('Are you sure you want to book this flight?')) {
       const computedPrice = calculatePrice();
       setPrice(computedPrice);
-      
+
       try {
         const res = await axios.post(`${VITE_HOST}/api/bookings`, {
           ...formData,
@@ -93,7 +95,7 @@ const Dashboard = () => {
     if (window.confirm('Are you sure you want to proceed with the payment?')) {
       try {
         const token = "$2b$10$02w8E3gOwSc1LQVDVOcLROLVseOGpHIN30SOwjojWIdZBwBDn2yjS"; // Your actual token
-  
+
         const res = await axios.post(
           `http://192.168.10.14:3001/api/unionbank/transfertransaction`,
           {
@@ -113,6 +115,8 @@ const Dashboard = () => {
         setFormData({
           departureAirport: '',
           arrivalAirport: '',
+          departureDate: '',
+          departureTime: '',
           passengers: 1,
           tripType: 'oneWay',
           travelClass: 'economy'
@@ -129,13 +133,22 @@ const Dashboard = () => {
 
   const [paymentDetails, setPaymentDetails] = useState({
     debitAccount: '',
-    creditAccount: ''
+    creditAccount: '000000021'
   });
 
   const handlePaymentChange = (e) => {
     const { name, value } = e.target;
     setPaymentDetails((prev) => ({ ...prev, [name]: value }));
   };
+
+  const presetTimes = [
+    '06:00',
+    '09:00',
+    '12:00',
+    '15:00',
+    '18:00',
+    '21:00'
+  ];
 
   return (
     <div className="dashboard-container">
@@ -184,6 +197,34 @@ const Dashboard = () => {
           </select>
         </div>
         <div className="form-group">
+          <label htmlFor="departureDate">Departure Date:</label>
+          <input
+            type="date"
+            id="departureDate"
+            name="departureDate"
+            value={formData.departureDate}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="departureTime">Departure Time:</label>
+          <select
+            id="departureTime"
+            name="departureTime"
+            value={formData.departureTime}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Departure Time</option>
+            {presetTimes.map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
           <label htmlFor="numberOfPassengers">Number of Passengers:</label>
           <input
             type="number"
@@ -204,7 +245,7 @@ const Dashboard = () => {
             onChange={handleChange}
             required
           >
-            <option value="oneWay">One-Way</option>
+            <option value="oneWay">One Way</option>
             <option value="roundTrip">Round Trip</option>
           </select>
         </div>
@@ -217,18 +258,28 @@ const Dashboard = () => {
             onChange={handleChange}
             required
           >
-            <option value="economy">Economy Class</option>
-            <option value="business">Business Class</option>
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
             <option value="first">First Class</option>
           </select>
         </div>
-
         <button type="submit">Book Flight</button>
       </form>
-      
-      {showPaymentForm && (
-        <div className="payment-form">
-          <h2>Payment Form</h2>
+
+      {showPaymentForm && formData && (
+        <div>
+          <h3>Booking Details</h3>
+          <p>Booking ID: {formData._id}</p>
+          <p>Departure Airport: {formData.departureAirport}</p>
+          <p>Arrival Airport: {formData.arrivalAirport}</p>
+          <p>Departure Date: {formData.departureDate}</p>
+          <p>Departure Time: {formData.departureTime}</p>
+          <p>Passengers: {formData.passengers}</p>
+          <p>Trip Type: {formData.tripType}</p>
+          <p>Travel Class: {formData.travelClass}</p>
+          <p>Price: ${price.toFixed(2)}</p>
+
+          <h3>Payment Form</h3>
           <form onSubmit={handlePaymentSubmit}>
             <div className="form-group">
               <label htmlFor="debitAccount">Debit Account:</label>
@@ -238,6 +289,7 @@ const Dashboard = () => {
                 name="debitAccount"
                 value={paymentDetails.debitAccount}
                 onChange={handlePaymentChange}
+                pattern="[0-9]*"
                 required
               />
             </div>
@@ -249,25 +301,15 @@ const Dashboard = () => {
                 name="creditAccount"
                 value={paymentDetails.creditAccount}
                 onChange={handlePaymentChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="amount">Amount:</label>
-              <input
-                type="text"
-                id="amount"
-                name="amount"
-                value={price}
                 readOnly
               />
             </div>
-            <button type="submit">Submit Payment</button>
+            <button type="submit">Make Payment</button>
           </form>
         </div>
       )}
 
-      <h2>Customer Feedback</h2>
+      <h2>Feedback Form</h2>
       <form onSubmit={handleFeedbackSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
@@ -299,7 +341,7 @@ const Dashboard = () => {
             value={feedbackData.message}
             onChange={handleFeedbackChange}
             required
-          />
+          ></textarea>
         </div>
         <button type="submit">Submit Feedback</button>
       </form>

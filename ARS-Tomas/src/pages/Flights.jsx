@@ -201,7 +201,7 @@ const Flights = () => {
                         </select>
                     </div>
                     <button className="book-flight-button" onClick={handleBooking}>
-                        Book Flight
+                        Book Flight Now!
                     </button>
                 </div>
             </section>

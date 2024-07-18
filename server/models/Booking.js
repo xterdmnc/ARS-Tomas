@@ -1,10 +1,10 @@
-// models/Booking.js
-
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
     departureAirport: { type: String, required: true },
     arrivalAirport: { type: String, required: true },
+    departureDate: { type: Date, required: true },
+    departureTime: { type: String, required: true },
     passengers: { type: Number, required: true },
     tripType: { type: String, required: true },
     travelClass: { type: String, required: true }
@@ -13,4 +13,3 @@ const bookingSchema = new mongoose.Schema({
 const Booking = mongoose.model('Booking', bookingSchema);
 
 module.exports = Booking;
-    

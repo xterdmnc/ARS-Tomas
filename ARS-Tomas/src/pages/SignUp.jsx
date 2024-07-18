@@ -14,18 +14,19 @@ const SignUp = () => {
         confirmPassword: '',
         role: 'customer' // default role
     });
+    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-    
+
         const { lastName, firstName, email, username, password, confirmPassword, role } = values;
-    
+
         if (password !== confirmPassword) {
             alert('Passwords do not match');
             return;
         }
-    
+
         try {
             const res = await axios.post(`${VITE_HOST}/api/createuser`, {
                 lastName,
@@ -37,13 +38,14 @@ const SignUp = () => {
                 role
             });
             if (res.data.success) {
-                navigate('/login');
+                setMessage('Account successfully created');
+                setTimeout(() => navigate('/login'), 3000); // Redirect after 3 seconds
             } else {
-                alert(res.data.message);
+                setMessage(res.data.message);
             }
         } catch (error) {
             console.error(error);
-            alert('Failed to sign up. Please try again later.');
+            setMessage('Failed to sign up. Please try again later.');
         }
     };
 
@@ -61,6 +63,7 @@ const SignUp = () => {
             <div className="signup-overlay"></div>
             <form onSubmit={handleSignUp} className="signup-form">
                 <h2>Create Your Account</h2>
+                {message && <p className="message">{message}</p>}
                 <div className="form-group">
                     <input
                         type="text"
@@ -129,7 +132,7 @@ const SignUp = () => {
                         className="form-control"
                     >
                         <option value="customer">Customer</option>
-                        <option value="staff">Staff</option>
+                        {/* <option value="staff">Staff</option> */}
                     </select>
                 </div>
                 <button type="submit" className="btn-primary">Sign Up</button>

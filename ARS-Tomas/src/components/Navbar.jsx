@@ -22,7 +22,7 @@ const Navbar = () => {
                 <ul className="navbar-menu">
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About Us</Link></li>
-                    <li><Link to="/flights">Book with Us!</Link></li>
+                    <li><Link to="/flights">Discover Flights</Link></li>
                     <li><Link to="/explore">Explore</Link></li>
                 </ul>
                 {!userRole ? (
