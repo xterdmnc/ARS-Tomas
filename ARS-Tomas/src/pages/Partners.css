@@ -1,0 +1,68 @@
+.partners-container {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #eaf2f8; /* Slightly warmer and eye-friendly background color */
+}
+
+.partners-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #004b87; /* Darker blue color for a connection to airline theme */
+    font-weight: bold;
+}
+
+.partners-logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust grid columns for better fit */
+    gap: 15px; /* Reduced gap for a more compact layout */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px; /* Add padding to prevent logos from touching edges on smaller screens */
+}
+
+.partner-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none; /* Remove underline from links */
+}
+
+.partner-logo {
+    width: 100%; /* Ensures logos fill their grid cell */
+    height: 120px; /* Adjusted height for a more balanced look */
+    object-fit: contain; /* Ensures logos fit within the given dimensions */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #fff; /* White background to enhance visibility */
+    padding: 10px; /* Padding around logos */
+}
+
+.partner-logo:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.partner-caption {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #333; /* Dark color for better readability */
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .partner-logo {
+        height: 100px; /* Adjust height on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .partner-logo {
+        height: 80px; /* Further adjust height on very small screens */
+    }
+
+    .partner-caption {
+        font-size: 0.9rem; /* Adjust font size on very small screens */
+    }
+}

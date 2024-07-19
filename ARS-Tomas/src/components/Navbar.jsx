@@ -24,6 +24,7 @@ const Navbar = () => {
                     <li><Link to="/about">About Us</Link></li>
                     <li><Link to="/flights">Discover Flights</Link></li>
                     <li><Link to="/explore">Explore</Link></li>
+                    <li><Link to="/partners">Partners</Link></li> {/* New Partners Link */}
                 </ul>
                 {!userRole ? (
                     <Link to="/login" className="navbar-login">Login</Link>

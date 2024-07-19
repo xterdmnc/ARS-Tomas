@@ -21,6 +21,7 @@ import CustomerInsights from './pages/Admin/CustomerInsights';
 import About from './pages/About';
 import Flights from './pages/Flights';
 import Explore from './pages/Explore';
+import Partners from './pages/Partners'; // Import the Partners component
 
 const Routes = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const Routes = createBrowserRouter([
     {
         path: '/explore',
         element: <Layout><Explore /></Layout>, // Add Explore route
+    },
+    {
+        path: '/partners',
+        element: <Layout><Partners /></Layout>, // Add Partners route
     },
     {
         path: '/dashboard',
@@ -78,15 +83,6 @@ const Routes = createBrowserRouter([
             </ProtectedRoute>
         ),
     },
-
-    // {
-    //     path: '/admin/audit-log',
-    //     element: (
-    //         <ProtectedRoute allowedRoles={[roles.ADMIN]}>
-    //             <Layout><AuditLog /></Layout>
-    //         </ProtectedRoute>
-    //     ),
-    // },
 ]);
 
 export default Routes;

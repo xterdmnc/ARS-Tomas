@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import './Dashboard.css'; // Assuming you have a Dashboard.css file for styling
+import './Dashboard.css';
 
 const Dashboard = () => {
   const { VITE_HOST } = import.meta.env;
@@ -11,6 +10,8 @@ const Dashboard = () => {
     arrivalAirport: '',
     departureDate: '',
     departureTime: '',
+    returnDate: '',
+    returnTime: '',
     passengers: 1,
     tripType: 'oneWay',
     travelClass: 'economy'
@@ -18,7 +19,7 @@ const Dashboard = () => {
 
   const [bookingDetails, setBookingDetails] = useState(null);
   const [price, setPrice] = useState(0);
-  const [showPaymentForm, setShowPaymentForm] = useState(false); // State to control showing payment form
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,10 +30,10 @@ const Dashboard = () => {
   };
 
   const calculatePrice = () => {
-    let basePrice = 4500; // Base price for the flight
-    if (formData.tripType === 'roundTrip') basePrice *= 2.3; // Round trip costs 80% more
-    if (formData.travelClass === 'business') basePrice *= 3.8; // Business class costs 50% more
-    if (formData.travelClass === 'first') basePrice *= 5; // First class costs 150% more
+    let basePrice = 4500;
+    if (formData.tripType === 'roundTrip') basePrice *= 2.3;
+    if (formData.travelClass === 'business') basePrice *= 3.8;
+    if (formData.travelClass === 'first') basePrice *= 5;
     return basePrice * formData.passengers;
   };
 
@@ -48,10 +49,9 @@ const Dashboard = () => {
           price: computedPrice
         });
         setBookingDetails(res.data);
-        setShowPaymentForm(true); // Show payment form after successful booking
+        setShowPaymentForm(true);
       } catch (error) {
         console.error('Error booking flight:', error);
-        // Handle error: show an error message or alert
       }
     }
   };
@@ -76,9 +76,7 @@ const Dashboard = () => {
       try {
         const res = await axios.post(`${VITE_HOST}/api/feedback`, feedbackData);
         console.log(res?.data);
-        // Show confirmation alert
         alert('Feedback sent successfully!');
-        // Clear feedback form after successful submission
         setFeedbackData({
           name: '',
           email: '',
@@ -94,7 +92,7 @@ const Dashboard = () => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to proceed with the payment?')) {
       try {
-        const token = "$2b$10$02w8E3gOwSc1LQVDVOcLROLVseOGpHIN30SOwjojWIdZBwBDn2yjS"; // Your actual token
+        const token = "$2b$10$02w8E3gOwSc1LQVDVOcLROLVseOGpHIN30SOwjojWIdZBwBDn2yjS";
 
         const res = await axios.post(
           `http://192.168.10.14:3001/api/unionbank/transfertransaction`,
@@ -110,13 +108,14 @@ const Dashboard = () => {
           }
         );
         console.log(res?.data?.message);
-        alert(res?.data?.message)
-        // Optionally reset form states or redirect to a success page
+        alert(res?.data?.message);
         setFormData({
           departureAirport: '',
           arrivalAirport: '',
           departureDate: '',
           departureTime: '',
+          returnDate: '',
+          returnTime: '',
           passengers: 1,
           tripType: 'oneWay',
           travelClass: 'economy'
@@ -152,134 +151,159 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h2>Book a Flight</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="departureAirport">From:</label>
-          <select
-            id="departureAirport"
-            name="departureAirport"
-            value={formData.departureAirport}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Departure Airport</option>
-            <option value="Ninoy Aquino International Airport, Philippines">Ninoy Aquino International Airport, Philippines</option>
-            <option value="Clark International Airport, Philippines">Clark International Airport, Philippines</option>
-            <option value="Laoag International Airport, Philippines">Laoag International Airport, Philippines</option>
-            <option value="Mactan-Cebu International Airport, Philippines">Mactan-Cebu International Airport, Philippines</option>
-            <option value="Kalibo International Airport, Philippines">Kalibo International Airport, Philippines</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="arrivalAirport">To:</label>
-          <select
-            id="arrivalAirport"
-            name="arrivalAirport"
-            value={formData.arrivalAirport}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Arrival Airport</option>
-            <option value="Tokyo, Japan">Tokyo, Japan - Haneda Airport (HND)</option>
-            <option value="Singapore">Singapore - Changi Airport (SIN)</option>
-            <option value="Sydney, Australia">Sydney, Australia - Sydney Airport (SYD)</option>
-            <option value="Seoul, South Korea">Seoul, South Korea - Incheon International Airport (ICN)</option>
-            <option value="Hong Kong">Hong Kong - Hong Kong International Airport (HKG)</option>
-            <option value="Los Angeles, USA">Los Angeles, USA - Los Angeles International Airport (LAX)</option>
-            <option value="Dubai, UAE">Dubai, UAE - Dubai International Airport (DXB)</option>
-            <option value="London, UK">London, UK - Heathrow Airport (LHR)</option>
-            <option value="Paris, France">Paris, France - Charles de Gaulle Airport (CDG)</option>
-            <option value="Bangkok, Thailand">Bangkok, Thailand - Suvarnabhumi Airport (BKK)</option>
-            <option value="New York City, USA">New York City, USA - John F. Kennedy International Airport (JFK)</option>
-            <option value="Rome, Italy">Rome, Italy - Leonardo da Vinci–Fiumicino Airport (FCO)</option>
-            <option value="Moscow, Russia">Moscow, Russia - Sheremetyevo International Airport (SVO)</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="departureDate">Departure Date:</label>
-          <input
-            type="date"
-            id="departureDate"
-            name="departureDate"
-            value={formData.departureDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="departureTime">Departure Time:</label>
-          <select
-            id="departureTime"
-            name="departureTime"
-            value={formData.departureTime}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Departure Time</option>
-            {presetTimes.map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="numberOfPassengers">Number of Passengers:</label>
-          <input
-            type="number"
-            id="numberOfPassengers"
-            name="numberOfPassengers"
-            value={formData.numberOfPassengers}
-            onChange={handleChange}
-            min="1"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="tripType">Trip Type:</label>
-          <select
-            id="tripType"
-            name="tripType"
-            value={formData.tripType}
-            onChange={handleChange}
-            required
-          >
-            <option value="oneWay">One Way</option>
-            <option value="roundTrip">Round Trip</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="travelClass">Travel Class:</label>
-          <select
-            id="travelClass"
-            name="travelClass"
-            value={formData.travelClass}
-            onChange={handleChange}
-            required
-          >
-            <option value="economy">Economy</option>
-            <option value="business">Business</option>
-            <option value="first">First Class</option>
-          </select>
-        </div>
-        <button type="submit">Book Flight</button>
-      </form>
+      <div className="form-section">
+        <h2>Book a Flight</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="departureAirport">From:</label>
+            <select
+              id="departureAirport"
+              name="departureAirport"
+              value={formData.departureAirport}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Departure Airport</option>
+              <option value="Ninoy Aquino International Airport, Philippines">Ninoy Aquino International Airport, Philippines</option>
+              <option value="Clark International Airport, Philippines">Clark International Airport, Philippines</option>
+              <option value="Laoag International Airport, Philippines">Laoag International Airport, Philippines</option>
+              <option value="Mactan-Cebu International Airport, Philippines">Mactan-Cebu International Airport, Philippines</option>
+              <option value="Kalibo International Airport, Philippines">Kalibo International Airport, Philippines</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="arrivalAirport">To:</label>
+            <select
+              id="arrivalAirport"
+              name="arrivalAirport"
+              value={formData.arrivalAirport}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Arrival Airport</option>
+              <option value="Tokyo, Japan">Tokyo, Japan - Haneda Airport (HND)</option>
+              <option value="Singapore">Singapore - Changi Airport (SIN)</option>
+              <option value="Sydney, Australia">Sydney, Australia - Sydney Airport (SYD)</option>
+              <option value="Seoul, South Korea">Seoul, South Korea - Incheon International Airport (ICN)</option>
+              <option value="Hong Kong">Hong Kong - Hong Kong International Airport (HKG)</option>
+              <option value="Los Angeles, USA">Los Angeles, USA - Los Angeles International Airport (LAX)</option>
+              <option value="Dubai, UAE">Dubai, UAE - Dubai International Airport (DXB)</option>
+              <option value="London, UK">London, UK - Heathrow Airport (LHR)</option>
+              <option value="Paris, France">Paris, France - Charles de Gaulle Airport (CDG)</option>
+              <option value="Bangkok, Thailand">Bangkok, Thailand - Suvarnabhumi Airport (BKK)</option>
+              <option value="New York City, USA">New York City, USA - John F. Kennedy International Airport (JFK)</option>
+              <option value="Rome, Italy">Rome, Italy - Leonardo da Vinci–Fiumicino Airport (FCO)</option>
+              <option value="Moscow, Russia">Moscow, Russia - Sheremetyevo International Airport (SVO)</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="departureDate">Departure Date:</label>
+            <input
+              type="date"
+              id="departureDate"
+              name="departureDate"
+              value={formData.departureDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="departureTime">Departure Time:</label>
+            <select
+              id="departureTime"
+              name="departureTime"
+              value={formData.departureTime}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Departure Time</option>
+              {presetTimes.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {showPaymentForm && formData && (
-        <div>
-          <h3>Booking Details</h3>
-          <p>Booking ID: {formData._id}</p>
-          <p>Departure Airport: {formData.departureAirport}</p>
-          <p>Arrival Airport: {formData.arrivalAirport}</p>
-          <p>Departure Date: {formData.departureDate}</p>
-          <p>Departure Time: {formData.departureTime}</p>
-          <p>Passengers: {formData.passengers}</p>
-          <p>Trip Type: {formData.tripType}</p>
-          <p>Travel Class: {formData.travelClass}</p>
-          <p>Price: ${price.toFixed(2)}</p>
+          {formData.tripType === 'roundTrip' && (
+            <>
+              <div className="form-group">
+                <label htmlFor="returnDate">Return Date:</label>
+                <input
+                  type="date"
+                  id="returnDate"
+                  name="returnDate"
+                  value={formData.returnDate}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="returnTime">Return Time:</label>
+                <select
+                  id="returnTime"
+                  name="returnTime"
+                  value={formData.returnTime}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Return Time</option>
+                  {presetTimes.map((time) => (
+                    <option key={time} value={time}>
+                      {time}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
+          )}
 
-          <h3>Payment Form</h3>
+          <div className="form-group">
+            <label htmlFor="passengers">Passengers:</label>
+            <input
+              type="number"
+              id="passengers"
+              name="passengers"
+              min="1"
+              value={formData.passengers}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="tripType">Trip Type:</label>
+            <select
+              id="tripType"
+              name="tripType"
+              value={formData.tripType}
+              onChange={handleChange}
+              required
+            >
+              <option value="oneWay">One Way</option>
+              <option value="roundTrip">Round Trip</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="travelClass">Class:</label>
+            <select
+              id="travelClass"
+              name="travelClass"
+              value={formData.travelClass}
+              onChange={handleChange}
+              required
+            >
+              <option value="economy">Economy</option>
+              <option value="business">Business</option>
+              <option value="first">First</option>
+            </select>
+          </div>
+          <button type="submit">Book Flight</button>
+        </form>
+      </div>
+      {showPaymentForm && bookingDetails && (
+        <div className="payment-section">
+          <h3>Payment Details</h3>
+          <p>Total Price: PHP {price.toFixed(2)}</p>
           <form onSubmit={handlePaymentSubmit}>
             <div className="form-group">
               <label htmlFor="debitAccount">Debit Account:</label>
@@ -289,7 +313,6 @@ const Dashboard = () => {
                 name="debitAccount"
                 value={paymentDetails.debitAccount}
                 onChange={handlePaymentChange}
-                pattern="[0-9]*"
                 required
               />
             </div>
@@ -301,50 +324,52 @@ const Dashboard = () => {
                 name="creditAccount"
                 value={paymentDetails.creditAccount}
                 onChange={handlePaymentChange}
-                readOnly
+                disabled
               />
             </div>
-            <button type="submit">Make Payment</button>
+            <button type="submit">Proceed with Payment</button>
           </form>
         </div>
       )}
 
-      <h2>Feedback Form</h2>
-      <form onSubmit={handleFeedbackSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={feedbackData.name}
-            onChange={handleFeedbackChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={feedbackData.email}
-            onChange={handleFeedbackChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="message">Message:</label>
-          <textarea
-            id="message"
-            name="message"
-            value={feedbackData.message}
-            onChange={handleFeedbackChange}
-            required
-          ></textarea>
-        </div>
-        <button type="submit">Submit Feedback</button>
-      </form>
+      <div className="feedback-section">
+        <h2>Customer Feedback</h2>
+        <form onSubmit={handleFeedbackSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={feedbackData.name}
+              onChange={handleFeedbackChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={feedbackData.email}
+              onChange={handleFeedbackChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="message">Message:</label>
+            <textarea
+              id="message"
+              name="message"
+              value={feedbackData.message}
+              onChange={handleFeedbackChange}
+              required
+            />
+          </div>
+          <button type="submit">Submit Feedback</button>
+        </form>
+      </div>
     </div>
   );
 };
