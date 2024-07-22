@@ -1,109 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './FlightUpdates.css';
 
-// Sample flight data
-const flightsData = [
-    {
-        id: 1,
-        destination: 'Tokyo, Japan',
-        airport: 'Haneda Airport (HND)',
-        aircraft: 'Boeing 777',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 2,
-        destination: 'Singapore',
-        airport: 'Changi Airport (SIN)',
-        aircraft: 'Airbus A350',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 3,
-        destination: 'Sydney, Australia',
-        airport: 'Sydney Airport (SYD)',
-        aircraft: 'Boeing 787',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 4,
-        destination: 'Seoul, South Korea',
-        airport: 'Incheon International Airport (ICN)',
-        aircraft: 'Airbus A380',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 5,
-        destination: 'Hong Kong',
-        airport: 'Hong Kong International Airport (HKG)',
-        aircraft: 'Boeing 737',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 6,
-        destination: 'Los Angeles, USA',
-        airport: 'Los Angeles International Airport (LAX)',
-        aircraft: 'Boeing 777',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 7,
-        destination: 'Dubai, UAE',
-        airport: 'Dubai International Airport (DXB)',
-        aircraft: 'Airbus A380',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 8,
-        destination: 'London, UK',
-        airport: 'Heathrow Airport (LHR)',
-        aircraft: 'Boeing 787',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 9,
-        destination: 'Paris, France',
-        airport: 'Charles de Gaulle Airport (CDG)',
-        aircraft: 'Airbus A350',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 10,
-        destination: 'Bangkok, Thailand',
-        airport: 'Suvarnabhumi Airport (BKK)',
-        aircraft: 'Boeing 737',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 11,
-        destination: 'New York City, USA',
-        airport: 'John F. Kennedy International Airport (JFK)',
-        aircraft: 'Airbus A380',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 12,
-        destination: 'Rome, Italy',
-        airport: 'Leonardo da Vinci–Fiumicino Airport (FCO)',
-        aircraft: 'Boeing 777',
-        specialNote: 'Special VIP flights available.',
-    },
-    {
-        id: 13,
-        destination: 'Moscow, Russia',
-        airport: 'Sheremetyevo International Airport (SVO)',
-        aircraft: 'Airbus A350',
-        specialNote: 'Special VIP flights available.',
-    },
-];
-
 const FlightUpdates = () => {
+    const [flights, setFlights] = useState([]);
     const [editFlightId, setEditFlightId] = useState(null);
     const [deleteFlightId, setDeleteFlightId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [newFlight, setNewFlight] = useState({
+        destination: '',
+        airport: '',
+        aircraft: ''
+    });
+
+    useEffect(() => {
+        fetchFlights();
+    }, []);
+
+    const fetchFlights = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_HOST}/api/flight`);
+            setFlights(response.data);
+        } catch (error) {
+            console.error('Error fetching flights:', error);
+        }
+    };
 
     const handleEdit = (id) => {
         setEditFlightId(id === editFlightId ? null : id);
-        // Reset delete confirmation
         setDeleteFlightId(null);
     };
 
@@ -115,19 +39,61 @@ const FlightUpdates = () => {
         setDeleteFlightId(null);
     };
 
-    const handleConfirmDelete = (id) => {
-        // Implement delete functionality here
-        console.log(`Deleting flight with ID ${id}`);
-        // Reset delete confirmation
-        setDeleteFlightId(null);
+    const handleConfirmDelete = async (id) => {
+        try {
+            await axios.delete(`${import.meta.env.VITE_HOST}/api/flight/${id}`);
+            setFlights(flights.filter((flight) => flight.id !== id));
+            setDeleteFlightId(null);
+        } catch (error) {
+            console.error('Error deleting flight:', error);
+        }
     };
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setNewFlight({ ...newFlight, [name]: value });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_HOST}/api/flight`, newFlight);
+            setFlights([...flights, response.data]);
+            setNewFlight({
+                destination: '',
+                airport: '',
+                aircraft: ''
+            });
+        } catch (error) {
+            console.error('Error adding flight:', error);
+        }
+    };
+
+    const handleSaveChanges = async (id) => {
+        const updatedFlight = flights.find((flight) => flight.id === id);
+        try {
+            await axios.put(`${import.meta.env.VITE_HOST}/api/flight/${id}`, updatedFlight);
+            setEditFlightId(null);
+        } catch (error) {
+            console.error('Error updating flight:', error);
+        }
+    };
+
+    const handleEditChange = (id, event) => {
+        const { name, value } = event.target;
+        setFlights(
+            flights.map((flight) =>
+                flight.id === id ? { ...flight, [name]: value } : flight
+            )
+        );
+    };
+
     // Filter flights based on search term
-    const filteredFlights = flightsData.filter((flight) =>
+    const filteredFlights = flights.filter((flight) =>
         flight.destination.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -144,32 +110,92 @@ const FlightUpdates = () => {
                     onChange={handleSearchChange}
                 />
             </div>
+            <div className="new-flight-form">
+                <h3>Add New Flight</h3>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="destination">Destination:</label>
+                    <input
+                        type="text"
+                        id="destination"
+                        name="destination"
+                        value={newFlight.destination}
+                        onChange={handleChange}
+                        required
+                    />
+                    <label htmlFor="airport">Airport:</label>
+                    <input
+                        type="text"
+                        id="airport"
+                        name="airport"
+                        value={newFlight.airport}
+                        onChange={handleChange}
+                        required
+                    />
+                    <label htmlFor="aircraft">Aircraft:</label>
+                    <input
+                        type="text"
+                        id="aircraft"
+                        name="aircraft"
+                        value={newFlight.aircraft}
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit">Add Flight</button>
+                </form>
+            </div>
             <div className="flight-list">
                 {filteredFlights.map((flight) => (
                     <div key={flight.id} className="flight-card">
-                        <div className="flight-info">
-                            <h3>{flight.destination}</h3>
-                            <p><strong>Landing Airport:</strong> {flight.airport}</p>
-                            <p><strong>Aircraft:</strong> {flight.aircraft}</p>
-                            {flight.specialNote && <p className="special-note">{flight.specialNote}</p>}
-                        </div>
-                        <div className="flight-actions">
-                            <button onClick={() => handleEdit(flight.id)}>Edit</button>
-                            <button onClick={() => handleDelete(flight.id)}>Delete</button>
-                        </div>
-                        {editFlightId === flight.id && (
-                            <div className="edit-flight-form">
-                                <h3>Edit Flight Details</h3>
-                                {/* Replace with your edit form fields */}
-                                <label>Destination:</label>
-                                <input type="text" defaultValue={flight.destination} />
-                                <label>Landing Airport:</label>
-                                <input type="text" defaultValue={flight.airport} />
-                                <label>Aircraft:</label>
-                                <input type="text" defaultValue={flight.aircraft} />
-                                <label>Special Note:</label>
-                                <textarea defaultValue={flight.specialNote}></textarea>
-                                <button type="submit">Save Changes</button>
+                        {editFlightId === flight.id ? (
+                            <div>
+                                <h3>Edit Flight</h3>
+                                <form>
+                                    <label htmlFor={`destination-${flight.id}`}>Destination:</label>
+                                    <input
+                                        type="text"
+                                        id={`destination-${flight.id}`}
+                                        name="destination"
+                                        value={flight.destination}
+                                        onChange={(event) => handleEditChange(flight.id, event)}
+                                    />
+                                    <label htmlFor={`airport-${flight.id}`}>Airport:</label>
+                                    <input
+                                        type="text"
+                                        id={`airport-${flight.id}`}
+                                        name="airport"
+                                        value={flight.airport}
+                                        onChange={(event) => handleEditChange(flight.id, event)}
+                                    />
+                                    <label htmlFor={`aircraft-${flight.id}`}>Aircraft:</label>
+                                    <input
+                                        type="text"
+                                        id={`aircraft-${flight.id}`}
+                                        name="aircraft"
+                                        value={flight.aircraft}
+                                        onChange={(event) => handleEditChange(flight.id, event)}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => handleSaveChanges(flight.id)}
+                                    >
+                                        Save Changes
+                                    </button>
+                                    <button type="button" onClick={() => handleEdit(flight.id)}>
+                                        Cancel
+                                    </button>
+                                </form>
+                            </div>
+                        ) : (
+                            <div>
+                                <div className="flight-info">
+                                    <h3>{flight.destination}</h3>
+                                    <p>Airport: {flight.airport}</p>
+                                    <p>Aircraft: {flight.aircraft}</p>
+                                </div>
+                                <div className="flight-actions">
+                                    <button onClick={() => handleEdit(flight.id)}>Edit</button>
+                                    <button onClick={() => handleDelete(flight.id)}>Delete</button>
+                                </div>
                             </div>
                         )}
                         {deleteFlightId === flight.id && (

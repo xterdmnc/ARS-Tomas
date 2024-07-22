@@ -9,7 +9,7 @@ const Partners = () => {
         { name: 'Ingco', logo: '/INGCO.png', url: 'http://192.168.10.29' },
         { name: 'KFC', logo: '/kfc.png', url: 'http://192.168.10.19' },
         { name: 'ShoePatoes', logo: '/Logo.jpg', url: 'http://192.168.10.26' },
-        { name: 'MedPoint', logo: '/MedPoint.png', url: 'http://192.168.10.29' },
+        { name: 'MedPoint', logo: '/MedPoint.png', url: 'http://192.168.10.36' },
         { name: 'Motortrade', logo: '/Motortrade.jpg', url: 'http://192.168.10.23' },
         { name: 'National Bookstore', logo: '/NationalBookStore.jpg', url: 'http://192.168.10.24' },
         { name: 'OH MART', logo: '/OHMART.jpg', url: 'http://192.168.10.21' },

@@ -11,8 +11,8 @@ const CustomerInsight = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const response = await axios.get(`${VITE_HOST}/api/feedback`);
-        setFeedbacks(response.data.data);
+        const response = await axios.get(`${import.meta.env.VITE_HOST}/api/feedback`);
+        setFeedbacks(response.data);
       } catch (err) {
         console.error('Error fetching feedback:', err);
         setError('Failed to fetch feedback. Please try again later.');
@@ -20,7 +20,7 @@ const CustomerInsight = () => {
     };
 
     fetchFeedbacks();
-  }, [VITE_HOST]);
+  }, []);
 
   const handleDeleteFeedback = async (feedbackId) => {
     if (window.confirm('Are you sure you want to delete this feedback?')) {

@@ -1,10 +1,19 @@
+/* FlightUpdates.css */
+
+/* General Styling */
 .flight-updates-container {
-    max-width: 800px;
-    margin: 0 auto;
     padding: 20px;
-    background-color: #f0f0f0;
+    max-width: 900px;
+    margin: auto;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f4f4f4;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
 }
 
 .search-container {
@@ -12,110 +21,241 @@
 }
 
 .search-container label {
-    margin-right: 10px;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-.search-container input[type="text"] {
+.search-container input {
+    width: 100%;
     padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
     border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.new-flight-form {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.new-flight-form h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.new-flight-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-flight-form label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.new-flight-form input,
+.new-flight-form textarea {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+}
+
+.new-flight-form textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.new-flight-form button {
+    margin-top: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.new-flight-form button:hover {
+    background-color: #0056b3;
 }
 
 .flight-list {
-    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .flight-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
     background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .flight-info {
-    flex: 1;
+    margin-bottom: 15px;
+}
+
+.flight-info h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.flight-info p {
+    margin: 5px 0;
 }
 
 .flight-actions {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
 }
 
-.edit-flight-form {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.delete-confirmation {
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 10px;
-}
-
-.delete-confirmation p {
-    margin-bottom: 10px;
-}
-
-.delete-buttons {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.delete-buttons button {
-    margin-left: 10px;
-    padding: 8px 20px;
-    background-color: #dc3545;
-    color: #fff;
+.flight-actions button {
+    padding: 8px 12px;
     border: none;
     border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
     cursor: pointer;
 }
 
-.delete-buttons button:hover,
-.delete-buttons button:focus,
-.delete-buttons button:active {
+.flight-actions button:nth-child(1) {
+    background-color: #007bff;
+}
+
+.flight-actions button:nth-child(2) {
+    background-color: #dc3545;
+}
+
+.flight-actions button:hover:nth-child(1) {
+    background-color: #0056b3;
+}
+
+.flight-actions button:hover:nth-child(2) {
     background-color: #c82333;
 }
 
-.edit-flight-form h3 {
-    margin-bottom: 10px;
-}
-
-.edit-flight-form label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.edit-flight-form input,
-.edit-flight-form textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+.delete-confirmation {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
     border-radius: 4px;
 }
 
-.edit-flight-form button {
-    padding: 8px 20px;
-    background-color: #007bff;
-    color: #fff;
+.delete-confirmation p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.delete-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete-buttons button {
+    padding: 8px 12px;
     border: none;
     border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
     cursor: pointer;
 }
 
-.edit-flight-form button:hover,
-.edit-flight-form button:focus,
-.edit-flight-form button:active {
-    background-color: #0056b3;
+.delete-buttons button:nth-child(1) {
+    background-color: #28a745;
+}
+
+.delete-buttons button:nth-child(2) {
+    background-color: #dc3545;
+}
+
+.delete-buttons button:hover:nth-child(1) {
+    background-color: #218838;
+}
+
+.delete-buttons button:hover:nth-child(2) {
+    background-color: #c82333;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .flight-updates-container {
+        padding: 15px;
+    }
+
+    .new-flight-form {
+        margin-bottom: 20px;
+    }
+
+    .new-flight-form input,
+    .new-flight-form textarea {
+        width: 100%;
+    }
+
+    .flight-card {
+        margin-bottom: 15px;
+        padding: 10px;
+    }
+
+    .flight-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .flight-actions button {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .delete-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .delete-buttons button {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .flight-updates-container {
+        padding: 10px;
+    }
+
+    .search-container input {
+        font-size: 14px;
+    }
+
+    .new-flight-form button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .flight-info h3 {
+        font-size: 18px;
+    }
+
+    .flight-info p {
+        font-size: 14px;
+    }
+
+    .flight-actions button {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .delete-buttons button {
+        font-size: 12px;
+        padding: 6px;
+    }
 }

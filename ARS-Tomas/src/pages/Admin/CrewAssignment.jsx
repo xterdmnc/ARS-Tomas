@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './CrewAssignment.css';
 
 const initialCrew = {
@@ -14,38 +15,35 @@ const CrewAssignment = () => {
     const [selectedCategory, setSelectedCategory] = useState('pilots');
 
     useEffect(() => {
-        // Simulated API call or database fetch for initial crew data
-        // This would typically fetch from a database or server
-        // For demo purposes, initializing with sample data
-        const initialData = {
-            pilots: [
-                { id: 1, name: 'John Doe' },
-                { id: 2, name: 'Jane Smith' },
-            ],
-            coPilots: [
-                { id: 3, name: 'James Brown' },
-                { id: 4, name: 'Emily Johnson' },
-            ],
-            flightAttendants: [
-                { id: 5, name: 'Michael Lee' },
-                { id: 6, name: 'Sarah Wilson' },
-            ],
-            groundCrew: [
-                { id: 7, name: 'David Lee' },
-                { id: 8, name: 'Lily Chen' },
-            ],
+        const fetchCrew = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_HOST}/api/crew`);
+                console.log(response.data); // Log the data to check its structure
+                
+                // Check if response.data is an object with the expected keys
+                if (response.data && typeof response.data === 'object') {
+                    setCrew(response.data);
+                } else {
+                    console.error('Response data is not in the expected format:', response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching crew data:', error);
+            }
         };
-        setCrew(initialData);
+        
+        fetchCrew();
     }, []);
 
-    const handleAddCrewMember = () => {
+    const handleAddCrewMember = async () => {
         if (newCrewMember.trim() !== '') {
             if (window.confirm(`Are you sure you want to add ${newCrewMember} to ${selectedCategory}?`)) {
+                const newMember = { name: newCrewMember, category: selectedCategory };
+                const response = await axios.post(`${import.meta.env.VITE_HOST}/api/crew`, newMember);
                 setCrew(prevCrew => ({
                     ...prevCrew,
                     [selectedCategory]: [
                         ...prevCrew[selectedCategory],
-                        { id: Date.now(), name: newCrewMember },
+                        response.data,
                     ],
                 }));
                 setNewCrewMember('');
@@ -53,9 +51,10 @@ const CrewAssignment = () => {
         }
     };
 
-    const handleDeleteCrewMember = (category, memberId) => {
-        if (window.confirm(`Are you sure you want to remove this crew member?`)) {
-            const updatedCrew = crew[category].filter(member => member.id !== memberId);
+    const handleDeleteCrewMember = async (category, memberId) => {
+        if (window.confirm('Are you sure you want to remove this crew member?')) {
+            await axios.delete(`${import.meta.env.VITE_HOST}/api/crew/${memberId}`);
+            const updatedCrew = crew[category].filter(member => member._id !== memberId);
             setCrew(prevCrew => ({
                 ...prevCrew,
                 [category]: updatedCrew,
@@ -100,9 +99,9 @@ const CrewAssignment = () => {
                 <h3>{selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}</h3>
                 <ul>
                     {crew[selectedCategory].map(member => (
-                        <li key={member.id}>
+                        <li key={member._id}>
                             {member.name}
-                            <button onClick={() => handleDeleteCrewMember(selectedCategory, member.id)}>Remove</button>
+                            <button onClick={() => handleDeleteCrewMember(selectedCategory, member._id)}>Remove</button>
                         </li>
                     ))}
                 </ul>

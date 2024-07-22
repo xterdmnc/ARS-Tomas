@@ -7,6 +7,9 @@ const UserRoute = require('../routes/User.routes');
 const BookingsRoute = require('../routes/Booking.routes');
 const FeedbackRoute = require('../routes/Feedback.routes');
 const PaymentRoute = require('../routes/Payment.routes');
+const CrewRoute = require('../routes/Crew.routes'); // Import the crew routes
+const FlightRoute = require('../routes/Flight.routes')
+
 
 // CORS setup
 app.use(cors({
@@ -29,11 +32,11 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', UserRoute);
-
 app.use('/api', BookingsRoute);
-
-app.use('/api', FeedbackRoute); // Use Feedback route
-
+app.use('/api', FeedbackRoute);
 app.use('/api', PaymentRoute);
+app.use('/api', FlightRoute);
+app.use('/api', CrewRoute); // Add the crew routes
+
 
 module.exports = app;

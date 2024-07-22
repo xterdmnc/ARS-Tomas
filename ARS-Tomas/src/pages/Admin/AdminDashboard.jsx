@@ -31,16 +31,14 @@ const AdminDashboard = () => {
         setError(null);
         try {
             const res = await axios.get(`${VITE_HOST}/api/users`);
-            console.log('Full API response:', res.data);
             if (res.data.success && Array.isArray(res.data.users)) {
                 setUsers(res.data.users);
             } else {
                 setError('Failed to fetch users: Invalid response structure');
             }
-            setLoading(false);
         } catch (error) {
-            console.error('Error fetching users:', error);
             setError(`Error fetching users: ${error.message}`);
+        } finally {
             setLoading(false);
         }
     };
@@ -50,7 +48,7 @@ const AdminDashboard = () => {
             await axios.delete(`${VITE_HOST}/api/users/${id}`);
             fetchUsers();
         } catch (error) {
-            console.error('Error deleting user', error);
+            setError(`Error deleting user: ${error.message}`);
         }
     };
 
@@ -69,14 +67,14 @@ const AdminDashboard = () => {
             if (user._id) {
                 await axios.put(`${VITE_HOST}/api/users/${user._id}`, user);
             } else {
-                await axios.post(`${VITE_HOST}/api/users`, user);
+                await axios.post(`${VITE_HOST}/api/createuser`, user); // Ensure the endpoint is correct
             }
             fetchUsers();
             setEditingUser(null);
             setShowForm(false);
             navigate('/admin');
         } catch (error) {
-            console.error('Error saving user', error);
+            setError(`Error saving user: ${error.message}`);
         }
     };
 

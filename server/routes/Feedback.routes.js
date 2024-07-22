@@ -13,4 +13,14 @@ router.post('/feedback', async (req, res) => {
   }
 });
 
+router.get('/feedback', async (req, res) => {
+  try {
+      const feedback = await Feedback.find();
+      res.status(200).json(feedback);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
+
 module.exports = router;
