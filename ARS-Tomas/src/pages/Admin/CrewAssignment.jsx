@@ -12,6 +12,7 @@ const initialCrew = {
 const CrewAssignment = () => {
     const [crew, setCrew] = useState(initialCrew);
     const [newCrewMember, setNewCrewMember] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('pilots');
 
     useEffect(() => {
@@ -64,7 +65,12 @@ const CrewAssignment = () => {
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
+        setSearchTerm(''); // Clear the search term when changing categories
     };
+
+    const filteredCrew = crew[selectedCategory].filter(member =>
+        member.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="crew-assignment-container">
@@ -97,8 +103,15 @@ const CrewAssignment = () => {
             </div>
             <div className="crew-list">
                 <h3>{selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}</h3>
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search Crew Member"
+                    className="search-input"
+                />
                 <ul>
-                    {crew[selectedCategory].map(member => (
+                    {filteredCrew.map(member => (
                         <li key={member._id}>
                             {member.name}
                             <button onClick={() => handleDeleteCrewMember(selectedCategory, member._id)}>Remove</button>

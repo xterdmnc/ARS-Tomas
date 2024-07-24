@@ -92,7 +92,7 @@ const Dashboard = () => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to proceed with the payment?')) {
       try {
-        const token = "$2b$10$02w8E3gOwSc1LQVDVOcLROLVseOGpHIN30SOwjojWIdZBwBDn2yjS";
+        const token = "$2b$10$6LAsSluGc0Pxmmqe47sqGufKgGDiq.RF6LmZjUyoX6MmK1X2Qe8LW";
 
         const res = await axios.post(
           `http://192.168.10.14:3001/api/unionbank/transfertransaction`,

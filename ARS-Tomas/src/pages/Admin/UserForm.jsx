@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './UserForm.css';
 
 const UserForm = ({ user, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
@@ -73,7 +74,6 @@ const UserForm = ({ user, onSave, onCancel }) => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                // Password is optional for updates, so no 'required'
             />
             <select
                 name="role"

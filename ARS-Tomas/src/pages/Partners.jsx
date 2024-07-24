@@ -10,7 +10,7 @@ const Partners = () => {
         { name: 'KFC', logo: '/kfc.png', url: 'http://192.168.10.19' },
         { name: 'ShoePatoes', logo: '/Logo.jpg', url: 'http://192.168.10.26' },
         { name: 'MedPoint', logo: '/MedPoint.png', url: 'http://192.168.10.36' },
-        { name: 'Motortrade', logo: '/Motortrade.jpg', url: 'http://192.168.10.23' },
+        { name: 'Motortrade', logo: '/Motortrade.jpg', url: 'http://192.168.10.23/moto' },
         { name: 'National Bookstore', logo: '/NationalBookStore.jpg', url: 'http://192.168.10.24' },
         { name: 'OH MART', logo: '/OHMART.jpg', url: 'http://192.168.10.21' },
         { name: 'ParaPo', logo: '/ParaPo.png', url: 'http://192.168.10.37' },
@@ -22,7 +22,7 @@ const Partners = () => {
         { name: 'watsons', logo: '/WATSONS.png', url: 'http://192.168.10.27' },
         { name: 'WNE', logo: '/WNE.png', url: 'http://192.168.10.12' },
 
-        { name: 'WNE', logo: '/WNE.png', url: 'http://192.168.10.43/' },
+        { name: 'LRT', logo: '/LRT-LOGO.png', url: 'http://192.168.10.43/' },
         // Add more partners as needed
     ];
 
